@@ -38,7 +38,7 @@ def undistort_img(img, K, D):
         2018-08-23
     '''
     Knew = K.copy()
-    Knew[(0, 1), (0, 1)] = 0.4 * K[(0, 1), (0, 1)]
+    Knew[(0, 1), (0, 1)] = 1.0 * K[(0, 1), (0, 1)]
     
     undist_img = cv2.fisheye.undistortImage(img, K, D=D, Knew=Knew)
 
