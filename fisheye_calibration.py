@@ -15,7 +15,7 @@ objp[:,:2] = np.mgrid[0:7,0:6].T.reshape(-1,2)  # 将世界坐标系建在标定
 obj_points = []    # 存储3D点
 img_points = []    # 存储2D点
  
-images = glob.glob("E:\python\Python Project\opencv_showimage\images\calibrateImages\*.jpg")
+images = glob.glob(".\\calib_img\\left\\*.png")
 for fname in images:
     img = cv2.imread(fname)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
