@@ -41,13 +41,13 @@ class fisheye_calib(object):
         '''
         # 设置寻找亚像素角点的参数
         criteria = (cv2.TERM_CRITERIA_MAX_ITER | cv2.TERM_CRITERIA_EPS, self.max_iter, self.eps)
-        
+
         # 获取标定板角点的位置
         w = self.size[0]
         h = self.size[1]
 
-        objp = np.zeros((h*w,3), np.float32)
-        objp[:,:2] = np.mgrid[0:w,0:h].T.reshape(-1,2) 
+        objp = np.zeros((1, w*h, 3), np.float32)
+        objp[0,:,:2] = np.mgrid[0:w, 0:h].T.reshape(-1, 2)
         
         obj_points = []    # 存储3D点
         img_points = []    # 存储2D点
@@ -68,7 +68,16 @@ class fisheye_calib(object):
                      img_points.append(corners2)
                 else:
                     img_points.append(corners)
-        ret, mtx, dist, rvecs, tvecs = cv2.calibrateCamera(obj_points, img_points, img_size, None, None)
+        
+        K = np.zeros((3, 3))
+        D = np.zeros((4, 1))
+
+        rvecs = [np.zeros((1, 1, 3), dtype=np.float64) for i in range(len(obj_points))]
+        tvecs = [np.zeros((1, 1, 3), dtype=np.float64) for i in range(len(obj_points))]
+
+        calibration_flags = cv2.fisheye.CALIB_RECOMPUTE_EXTRINSIC+cv2.fisheye.CALIB_CHECK_COND+cv2.fisheye.CALIB_FIX_SKEW
+
+        ret, mtx, dist, rvecs, tvecs = cv2.fisheye.calibrate(obj_points, img_points, img_size, K, D, rvecs, tvecs, calibration_flags, criteria)
 
         return ret, mtx, dist, rvecs, tvecs
 
@@ -81,6 +90,6 @@ if __name__ == "__main__":
     # print("mtx:\n", mtx)        # 内参数矩阵
     # print("dist:\n", dist)      # 畸变系数   
 
-    with open('data.json', 'w') as f:
+    with open('left_data.json', 'w') as f:
         json.dump({'mtx':mtx.tolist(), 'dist':dist.tolist()}, f)
 
