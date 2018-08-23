@@ -56,14 +56,14 @@ class fisheye_calib(object):
             img = cv2.imread(fname)
             gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
             img_size = gray.shape[::-1]
-            ret_find_corners, corners = cv2.findChessboardCorners(gray, self.size, None)
+            ret, corners = cv2.findChessboardCorners(gray, self.size, None)
             
-            if ret_find_corners:
+            if ret:
                 obj_points.append(objp)
             
                 # 在原角点的基础上寻找亚像素角点
                 corners2 = cv2.cornerSubPix(gray, corners, (5,5), (-1,-1), criteria)  
-                if corners2:
+                if corners2 is None:
                      img_points.append(corners2)
                 else:
                     img_points.append(corners)
@@ -71,14 +71,11 @@ class fisheye_calib(object):
 
         return ret, mtx, dist, rvecs, tvecs
 
-    
 
 if __name__ == "__main__":
     camera = fisheye_calib(30, 0.001, (11, 9))
     images = glob.glob(".\\calib_img\\left\\*.png")
     ret, mtx, dist, rvecs, tvecs = camera.calibration(images)
-    print("ret:", ret)
+
     print("mtx:\n", mtx)        # 内参数矩阵
     print("dist:\n", dist)      # 畸变系数   
-    print("rvecs:\n", rvecs)    # 旋转向量  
-    print("tvecs:\n", tvecs)    # 平移向量
