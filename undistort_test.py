@@ -11,49 +11,49 @@ def read_json(filename):
     Parameters:
         filename - json文件名
     Returns:
-        mtx - 内参数矩阵
-        dist - 畸变系数矩阵
+        K - 内参数矩阵
+        D - 畸变系数矩阵
     Modify:
         2018-08-23
     '''
     f = open(filename, encoding='utf-8')
     calib_data = json.load(f)
-    mtx = np.array(calib_data['mtx'])
-    dist = np.array(calib_data['dist'])
+    K = np.array(calib_data['K'])
+    D = np.array(calib_data['D'])
 
-    return mtx, dist
+    return K, D
     
 
-def undistort_img(img, mtx, dist):
+def undistort_img(img, K, D):
     '''
     函数说明：图像畸变矫正
 
     Parameters:
         img - 输入畸变图像
-        mtx - 内参数矩阵
-        dist - 畸变系数矩阵
+        K - 内参数矩阵
+        D - 畸变系数矩阵
     Returns:
-        undistort_img - 无畸变图像
+        undist_img - 无畸变图像
     Modify:
         2018-08-23
     '''
-    mtx_new = mtx.copy()
-    mtx_new[(0, 1), (0, 1)] = 0.4 * mtx[(0, 1), (0, 1)]
+    Knew = K.copy()
+    Knew[(0, 1), (0, 1)] = 0.4 * K[(0, 1), (0, 1)]
     
-    undist_img = cv2.fisheye.undistortImage(img, mtx, dist, mtx_new)
+    undist_img = cv2.fisheye.undistortImage(img, K, D=D, Knew=Knew)
 
     return undist_img
 
 
 if __name__ == "__main__":
     filename = '.\\left_data.json'
-    mtx, dist = read_json(filename)
+    K, D = read_json(filename)
 
-    # print(mtx)
-    # print(dist)
+    print(K)
+    print(D)
 
     img = cv2.imread('.\\test.png')
-    undist_img = undistort_img(img, mtx, dist)
+    undist_img = undistort_img(img, K, D)
     cv2.imshow('undist', undist_img)
     cv2.imwrite('undist_test.png', undist_img)
     cv2.waitKey(1000)
