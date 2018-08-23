@@ -74,18 +74,18 @@ class fisheye_calib(object):
         rvecs = [np.zeros((1, 1, 3), dtype=np.float64) for i in range(len(obj_points))]
         tvecs = [np.zeros((1, 1, 3), dtype=np.float64) for i in range(len(obj_points))]
 
-        calibration_flags = cv2.fisheye.CALIB_RECOMPUTE_EXTRINSIC+cv2.fisheye.CALIB_CHECK_COND+cv2.fisheye.CALIB_FIX_SKEW
+        calibration_flags = cv2.fisheye.CALIB_RECOMPUTE_EXTRINSIC + cv2.fisheye.CALIB_CHECK_COND + cv2.fisheye.CALIB_FIX_SKEW
 
-        rms, _, _, _, _ = cv2.fisheye.calibrate(obj_points, img_points, img_size, K, D, rvecs, tvecs, calibration_flags, criteria)
+        rms, _, _, _, _ = cv2.fisheye.calibrate(obj_points, img_points, img_size, K, D, rvecs, tvecs, 0, criteria)
 
         return K, D
 
 
 if __name__ == "__main__":
     camera = fisheye_calib((11, 9))
-    images = glob.glob(".\\calib_img\\left\\*.png")
+    images = glob.glob("./split/right/*.png")
     K, D = camera.calibration(images)
 
-    with open('left_data.json', 'w') as f:
+    with open('./split/right/right_data.json', 'w') as f:
         json.dump({'K':K.tolist(), 'D':D.tolist()}, f)
 

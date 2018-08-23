@@ -38,7 +38,7 @@ def undistort_img(img, K, D):
         2018-08-23
     '''
     Knew = K.copy()
-    Knew[(0, 1), (0, 1)] = 1.0 * K[(0, 1), (0, 1)]
+    Knew[(0, 1), (0, 1)] = 0.8 * K[(0, 1), (0, 1)]
     
     undist_img = cv2.fisheye.undistortImage(img, K, D=D, Knew=Knew)
 
@@ -46,16 +46,16 @@ def undistort_img(img, K, D):
 
 
 if __name__ == "__main__":
-    filename = '.\\left_data.json'
+    filename = './split/right/right_data.json'
     K, D = read_json(filename)
 
     print(K)
     print(D)
 
-    img = cv2.imread('.\\test.png')
+    img = cv2.imread('./split/right/0.png')
     undist_img = undistort_img(img, K, D)
     cv2.imshow('undist', undist_img)
-    cv2.imwrite('undist_test.png', undist_img)
+    cv2.imwrite('./split/right/undist_test.png', undist_img)
     cv2.waitKey(1000)
     
     
