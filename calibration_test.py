@@ -4,6 +4,7 @@
 import numpy as np 
 import cv2
 import glob
+import json
 
 class fisheye_calib(object):
 
@@ -77,5 +78,9 @@ if __name__ == "__main__":
     images = glob.glob(".\\calib_img\\left\\*.png")
     ret, mtx, dist, rvecs, tvecs = camera.calibration(images)
 
-    print("mtx:\n", mtx)        # 内参数矩阵
-    print("dist:\n", dist)      # 畸变系数   
+    # print("mtx:\n", mtx)        # 内参数矩阵
+    # print("dist:\n", dist)      # 畸变系数   
+
+    with open('data.json', 'w') as f:
+        json.dump({'mtx':mtx.tolist(), 'dist':dist.tolist()}, f)
+
