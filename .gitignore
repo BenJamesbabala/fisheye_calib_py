@@ -8,3 +8,4 @@ calib_img/*/*
 .vscode/*
 __pycache__/*
 split/*
+*.png
