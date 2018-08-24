@@ -83,10 +83,10 @@ class fisheye_calib(object):
 
 if __name__ == "__main__":
     camera = fisheye_calib((11, 9))
-    images = glob.glob("./split/right/*.png")
+    images = glob.glob("./split/back/*.png")
     K, D = camera.calibration(images)
 
-    with open('./split/right/right_data.json', 'w') as f:
+    with open('./split/back/back_data.json', 'w') as f:
         json.dump({'K':K.tolist(), 'D':D.tolist()}, f)
 
 

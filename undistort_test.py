@@ -46,16 +46,17 @@ def undistort_img(img, K, D):
 
 
 if __name__ == "__main__":
-    filename = './split/right/right_data.json'
+    filename = './split/back/back_data.json'
     K, D = read_json(filename)
 
     print(K)
     print(D)
 
-    img = cv2.imread('./split/right/0.png')
+    img = cv2.imread('back.jpg')
+    # img = cv2.resize(img, (960, 540))
     undist_img = undistort_img(img, K, D)
     cv2.imshow('undist', undist_img)
-    cv2.imwrite('./split/right/undist_test.png', undist_img)
+    cv2.imwrite('undist_test.png', undist_img)
     cv2.waitKey(1000)
     
     
