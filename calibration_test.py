@@ -53,6 +53,7 @@ class fisheye_calib(object):
             gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
             img_size = gray.shape[::-1]
             ret, corners = cv2.findChessboardCorners(gray, self.size, None)
+            # print(corners)
             
             if ret:
                 obj_points.append(objp)
