@@ -89,3 +89,4 @@ if __name__ == "__main__":
     with open('./split/right/right_data.json', 'w') as f:
         json.dump({'K':K.tolist(), 'D':D.tolist()}, f)
 
+
