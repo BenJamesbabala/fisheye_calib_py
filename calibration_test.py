@@ -22,6 +22,7 @@ class fisheye_calib(object):
         self.size = size # 角点排布
 
 
+
     def calibration(self, filename_list):
         '''
         函数说明：标定算法
