@@ -6,3 +6,5 @@ split/*/*
 src_img/*
 calib_img/*/*
 .vscode/*
+__pycache__/*
+split/*
