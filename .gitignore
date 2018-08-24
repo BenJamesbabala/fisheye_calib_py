@@ -9,3 +9,4 @@ calib_img/*/*
 __pycache__/*
 split/*
 *.png
+src_ground/*
