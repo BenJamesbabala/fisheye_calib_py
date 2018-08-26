@@ -51,7 +51,7 @@ def calc_extrinsic(img, size):
             img_points.append(corners)
 
         cv2.drawChessboardCorners(img, (11,9), corners, ret)
-        cv2.imshow('img', img)
+        # cv2.imshow('img', img)
         # cv2.waitKey(1000)
 
     K = np.zeros((3, 3))
@@ -76,8 +76,8 @@ if __name__ == '__main__':
 
     # img = cv2.imread('./ground/back.jpg')
     img = cv2.imread('./undistort_ground/left.png')
-    cv2.imshow('undistort', img)
+    # cv2.imshow('undistort', img)
     rvecs, tvecs = calc_extrinsic(img, (11, 7))
     print(rvecs)
     print(tvecs)
-    cv2.waitKey()
+    # cv2.waitKey()
