@@ -29,14 +29,14 @@ if __name__ == '__main__':
     rvecs, tvecs = calc_extrinsic(img, size)
     rvecs_T = rvecs[0].tolist()
     rotate_list = [] 
-    # print(len(rvecs_T))
+    print(len(rvecs_T))
     # print(rvecs_T[1][0])
     for i in range(len(rvecs_T)):
         rotate_list.append(rvecs_T[i][0])
-    # print(rotate_list)
+    print(rotate_list)
     om = np.array(rotate_list)
     rmat = cv2.Rodrigues(om)[0]
     print(rmat)
-    # vertical_img = cv2.warpAffine(img, rmat, (img.shape[1], img.shape[0]))
-    # cv2.imshow('vertical', vertical_img)
-    # cv2.waitKey()
+    vertical_img = cv2.warpPerspective(img, rmat, (img.shape[1], img.shape[0]))
+    cv2.imshow('vertical', vertical_img)
+    cv2.waitKey()
