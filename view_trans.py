@@ -39,7 +39,7 @@ def img_view_trans(img, points_src, points_dst):
     Parameters:
         img - 经过内参数矫正后的图像
         points_src - 原图像端点坐标列表
-        points_dst - 目的图像端点坐标列表
+        points_dst - 目的图像端点坐标列表      
     Returns:
         vertical_view - 输出俯视图像
     Modify:
@@ -81,7 +81,7 @@ def make_points_dst(scale, size, center):
 
 
 if __name__ == '__main__':
-    img = cv2.imread('./undistort_ground/undist_back.png')
+    img = cv2.imread('./undistort_ground/undist_front.png')
     size = (11, 7)
     extreme_points_list = find_extreme_points(img, size)
     points_src = np.array(extreme_points_list)
@@ -98,5 +98,5 @@ if __name__ == '__main__':
     # for i in range(len(extreme_points_list)):
     #     cv2.circle(img, extreme_points_list[i], 5, color, -1)
     cv2.imshow('vertical_view', vertical_view)
-    cv2.imwrite('vertical_back_0.8.png', vertical_view)
+    cv2.imwrite('vertical_front_0.8.png', vertical_view)
     cv2.waitKey()
