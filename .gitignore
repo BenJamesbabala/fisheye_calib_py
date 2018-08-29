@@ -12,3 +12,5 @@ split/*
 src_ground/*
 test/*
 ground/*
+package-lock.json
+node_modules/*/*
