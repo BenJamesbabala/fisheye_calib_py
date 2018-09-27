@@ -36,16 +36,16 @@ def img_split(img):
 
 
 if __name__ == '__main__':
-    images = glob.glob('./src_img/*/*.png')
+    images = glob.glob('./src_img/cal.png')
     for i in range(len(images)):
         fname = images[i]
         img = cv2.imread(fname)
         image_list = img_split(img)
 
-        cv2.imwrite('./split/front/%d.png' % i, image_list[0])
-        cv2.imwrite('./split/back/%d.png' % i, image_list[1])
-        cv2.imwrite('./split/left/%d.png' % i, image_list[2])
-        cv2.imwrite('./split/right/%d.png' % i, image_list[3])
+        cv2.imwrite('./split/front.png', image_list[0])
+        cv2.imwrite('./split/back.png', image_list[1])
+        cv2.imwrite('./split/left.png', image_list[2])
+        cv2.imwrite('./split/right.png', image_list[3])
         del image_list[:]
 
 
